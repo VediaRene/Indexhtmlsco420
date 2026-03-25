@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Vedia Renne</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #00ff00;
+      font-family: "Courier New", monospace;
+      overflow: hidden;
+    }
+
+    /* Fondo tipo lluvia hacker */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .contenido {
+      text-align: center;
+      position: relative;
+      top: 30%;
+    }
+
+    h1 {
+      font-size: 3em;
+      text-shadow: 0 0 10px #00ff00;
+      animation: parpadeo 1.5s infinite alternate;
+    }
+
+    p {
+      font-size: 1.2em;
+      opacity: 0.8;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #00ff00;
+      color: black;
+      box-shadow: 0 0 10px #00ff00;
+    }
+
+    @keyframes parpadeo {
+      from { opacity: 0.6; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="contenido">
+  <h1>Vedia Rene</h1>
+  <p>> Acceso concedido...</p>
+  <p>> Sistema desplegado en Netlify 🚀</p>
+  <button class="btn">INICIAR</button>
+</div>
+
+<script>
+  const canvas = document.getElementById("matrix");
+  const ctx = canvas.getContext("2d");
+
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+
+  const letras = "01VEDIARENEXYZ$#@";
+  const fontSize = 14;
+  const columnas = canvas.width / fontSize;
+
+  const gotas = [];
+  for (let x = 0; x < columnas; x++) {
+    gotas[x] = 1;
+  }
+
+  function dibujar() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff00";
+    ctx.font = fontSize + "px monospace";
+
+    for (let i = 0; i < gotas.length; i++) {
+      const texto = letras.charAt(Math.floor(Math.random() * letras.length));
+      ctx.fillText(texto, i * fontSize, gotas[i] * fontSize);
+
+      if (gotas[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        gotas[i] = 0;
+      }
+
+      gotas[i]++;
+    }
+  }
+
+  setInterval(dibujar, 35);
+</script>
+
+</body>
+</html>
